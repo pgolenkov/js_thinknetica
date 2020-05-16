@@ -15,18 +15,18 @@ let time_array = source_time.split(/[:\.\-]/);
 let hours = parseInt(time_array[0]);
 let minutes = parseInt(time_array[1]);
 
-const max_hours = pm || am ? 12 : 23
+const max_hours = pm || am ? 12 : 23;
 
 if (hours >= 1 && hours <= max_hours && minutes >= 0 && minutes < 60) {
     if (pm && hours < 12)
-        hours += 12
+        hours += 12;
     else if (am && hours === 12)
-        hours = 0
-    hours_str = hours.toString().padStart(2, '0')
-    minutes_str = minutes.toString().padStart(2, '0')
+        hours = 0;
+    hours_str = hours.toString().padStart(2, '0');
+    minutes_str = minutes.toString().padStart(2, '0');
 
-    time = `${hours_str}:${minutes_str}`
+    time = `${hours_str}:${minutes_str}`;
 
-    alert(`Время в 24 часовом формате ${time}`)
+    alert(`Время в 24 часовом формате ${time}`);
 } else
-    alert("Ошибка в задании времени")
+    alert("Ошибка в задании времени");
