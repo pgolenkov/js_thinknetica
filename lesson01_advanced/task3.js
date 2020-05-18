@@ -1,10 +1,15 @@
 let source_string = prompt("Введите строку как угодно длинную", "");
+let words = source_string.split(' ');
 
 let target_string = "";
+let line = "";
 
-while (source_string.length > 0) {
-    target_string += source_string.substr(0, 80) + '\n';
-    source_string = source_string.substr(80);
+for (let word of words) {
+    if (line.length + word.length > 80) {
+        target_string += line.trim() + '\n';
+        line = "";
+    } else
+        line += word + ' ';
 }
 
 console.log(target_string);

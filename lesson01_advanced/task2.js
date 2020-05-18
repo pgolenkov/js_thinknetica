@@ -16,8 +16,9 @@ let hours = parseInt(time_array[0]);
 let minutes = parseInt(time_array[1]);
 
 const max_hours = pm || am ? 12 : 23;
+const min_hours = pm || am ? 1 : 0;
 
-if (hours >= 1 && hours <= max_hours && minutes >= 0 && minutes < 60) {
+if (hours >= min_hours && hours <= max_hours && minutes >= 0 && minutes < 60) {
     if (pm && hours < 12)
         hours += 12;
     else if (am && hours === 12)
