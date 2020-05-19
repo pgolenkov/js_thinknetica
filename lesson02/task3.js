@@ -35,7 +35,7 @@ function eRegistration(ticket, fullName, nowTime) {
     if (ticketObject.registrationTime)
         throw new Error('Регистрация уже была проведена ранее');
 
-    const timeToFly = flight.registartionEnds - nowTime;
+    const timeToFly = flight.registrationEnds - nowTime;
     if (timeToFly < 1 * 3600 * 1000 || timeToFly > 5 * 3600 * 1000)
         throw new Error('Время до вылета должно быть не более 5 и не менее 1 часа');
 

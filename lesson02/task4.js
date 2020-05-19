@@ -21,5 +21,30 @@
  * @returns {Report} отчет
  */
 function flightReport(flight, nowTime) {
-  
+    const flightObject = flights[flight];
+
+    if (!flightObject)
+        throw new Error('Рейс не существует');
+
+    const timeToFly = (flightObject.registrationEnds - nowTime) / 1000 / 3600;
+    const registration = timeToFly > 1 && timeToFly < 5;
+
+    const complete = timeToFly < 1;
+
+    const countOfSeats = flightObject.seats;
+
+    const reservedSeats = flightObject.tickets.length;
+
+    const registeredSeats = flightObject.tickets.filter(t => t.registrationTime).length
+
+    const report = {
+        flight,
+        registration,
+        complete,
+        countOfSeats,
+        reservedSeats,
+        registeredSeats
+    }
+
+    return report;
 }
