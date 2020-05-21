@@ -24,4 +24,5 @@
  * @property {number} seat
  * @property {number} buyTime
  * @property {number} registrationTime
+ * @property {number} revertTime
  */

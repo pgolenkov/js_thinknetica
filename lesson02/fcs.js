@@ -16,7 +16,7 @@ let flights = {
         seats: 28,
         businessSeats: 4,
         registrationStarts: makeTime(10, 0),
-        registrationEnds: makeTime(15, 0),
+        registrationEnds: makeTime(16, 0),
         tickets: [
             {
                 id: 'BH118-B50',
@@ -26,6 +26,7 @@ let flights = {
                 seat: 18,
                 buyTime: makeTime(2, 0),
                 registrationTime: null,
+                revertTime: null
             }
         ],
     }
@@ -46,6 +47,14 @@ let flights = {
 // function createFlight(airliner, time) { }
 
 /**
+ * Выбор только активных билетов рейса
+ *
+ * @param {Flight} flight
+ * @returns {array} возвращает массив активных билетов
+ */
+activeTickets = flight => flight.tickets.filter(item => !item.revertTime);
+
+/**
  * Поиск свободного места нужного типа
  *
  * Гарантирует что найдет свободное место нужного типа или вернет null
@@ -64,7 +73,7 @@ function findAvailableSeat(flight, type) {
             const availableSeats = [];
 
             for (let i = flight.businessSeats + 1; i <= flight.seats; i++)
-                if (!flight.tickets.find(item => item.seat === i))
+                if (!activeTickets(flight).find(item => item.seat === i))
                     availableSeats.push(i)
 
             if (availableSeats.length === 0)
@@ -74,7 +83,7 @@ function findAvailableSeat(flight, type) {
             return availableSeats[index];
         case 1: // business
             for (let i = 1; i <= flight.businessSeats; i++)
-                if (!flight.tickets.find(item => item.seat === i))
+                if (!activeTickets(flight).find(item => item.seat === i))
                     seatsOfType++;
 
             if (seatsOfType === 0)
@@ -82,7 +91,7 @@ function findAvailableSeat(flight, type) {
 
             do {
                 seat = Math.floor(Math.random() * flight.businessSeats) + 1;
-                exists = flight.tickets.find(item => item.seat === seat);
+                exists = activeTickets(flight).find(item => item.seat === seat);
             } while (exists);
 
             return seat;
@@ -110,7 +119,7 @@ function buyTicket(flightName, buyTime, fullName, type = 0) {
     if (!flight)
         throw new Error('Flight not found');
 
-    if (flight.tickets.length >= flight.seats)
+    if (activeTickets(flight).length >= flight.seats)
         throw new Error('No seats available');
 
     if (buyTime > flight.registrationEnds)
@@ -123,7 +132,7 @@ function buyTicket(flightName, buyTime, fullName, type = 0) {
     let id;
     do {
         id = flight.name + '-' + Math.random().toString().substr(2, 3);
-        exists = flight.tickets.find(item => item.id === id);
+        exists = activeTickets(flight).find(item => item.id === id);
     } while (exists);
 
     /**
@@ -166,5 +175,5 @@ function flightDetails(flightName) {
     }
 
     console.table(flight);
-    console.table(flight.tickets);
+    console.table(activeTickets(flight));
 }

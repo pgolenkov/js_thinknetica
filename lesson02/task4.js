@@ -8,6 +8,9 @@
  * @property {number} countOfSeats Общее количество мест
  * @property {number} reservedSeats Количество купленных (забронированных) мест
  * @property {number} registeredSeats Количество пассажиров, прошедших регистрацию
+ * @property {number} countOfReservations Количество всех регистраций мест
+ * @property {number} countOfReverts Количество возвратов билетов
+ * @property {number} percentOfReverts Процент возвратов от общего числа бронирований
  */
 
  /**
@@ -33,9 +36,13 @@ function flightReport(flight, nowTime) {
 
     const countOfSeats = flightObject.seats;
 
-    const reservedSeats = flightObject.tickets.length;
+    const reservedSeats = activeTickets(flightObject).length;
 
-    const registeredSeats = flightObject.tickets.filter(t => t.registrationTime).length
+    const registeredSeats = activeTickets(flightObject).filter(t => t.registrationTime).length
+
+    const countOfReservations = flightObject.tickets.length;
+    const countOfReverts = flightObject.tickets.filter(t => t.revertTime).length
+    const percentOfReverts = countOfReverts / countOfReservations * 100;
 
     const report = {
         flight,
@@ -43,7 +50,10 @@ function flightReport(flight, nowTime) {
         complete,
         countOfSeats,
         reservedSeats,
-        registeredSeats
+        registeredSeats,
+        countOfReservations,
+        countOfReverts,
+        percentOfReverts
     }
 
     return report;
