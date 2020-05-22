@@ -52,7 +52,7 @@ let flights = {
  * @param {Flight} flight
  * @returns {array} возвращает массив активных билетов
  */
-activeTickets = flight => flight.tickets.filter(item => !item.revertTime);
+const activeTickets = flight => flight.tickets.filter(item => !item.revertTime);
 
 /**
  * Поиск свободного места нужного типа
