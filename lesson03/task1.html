@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Testing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+    <!-- добавляем фреймворк тестирования mocha -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+    <script>mocha.setup('bdd');</script>
+    <!-- добавим chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script>
+        // chai предоставляет большое количество функций. Объявим assert глобально
+        var assert = chai.assert;
+    </script>
+</head>
+<body>
+<script src="sum_positive.js"></script>
+<script src="sum_positive.test.js"></script>
+
+<!-- элемент с id="mocha" будет содержать результаты тестов -->
+<div id="mocha"></div>
+
+<!-- запускаем тесты! -->
+<script>
+    mocha.run();
+</script>
+</body>
+</html>
