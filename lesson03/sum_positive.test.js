@@ -36,6 +36,10 @@ describe('sumOfPositive', () => {
         assert.throws(() => sumOfPositive(["a", 5]), 'Param must be an array of numbers');
     });
 
+    it('throw error for array = [Infinity, 5]', () => {
+        assert.throws(() => sumOfPositive([Infinity, 5]), 'Param must be an array of numbers');
+    });
+
     it('throw error for no array param', () => {
         assert.throws(() => sumOfPositive(5), 'Param must be an array of numbers');
     });

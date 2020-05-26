@@ -1,5 +1,5 @@
 function sumOfPositive(array) {
-    if (!Array.isArray(array) || array.some(item => isNaN(item)))
+    if (!Array.isArray(array) || !array.every(item => Number.isFinite(item)))
         throw 'Param must be an array of numbers';
 
     const positiveArray = array.filter(item => item > 0);
