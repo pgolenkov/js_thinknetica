@@ -24,9 +24,15 @@ function flightReport(world, flight, nowTime) {
 
     const countOfSeats = flight.seats;
 
-    const reservedSeats = flight.tickets.length;
+    const reservedSeats = activeTickets(flight).length;
 
-    const registeredSeats = flight.tickets.filter(t => t.registrationTime).length
+    const registeredSeats = activeTickets(flight).filter(t => t.registrationTime).length
+
+    const countOfReservations = flight.tickets.length;
+
+    const countOfReverts = flight.tickets.filter(t => t.revertTime).length
+
+    const percentOfReverts = countOfReservations ? countOfReverts / countOfReservations * 100 : 0;
 
     const report = {
         flight: flight.name,
@@ -34,7 +40,10 @@ function flightReport(world, flight, nowTime) {
         complete,
         countOfSeats,
         reservedSeats,
-        registeredSeats
+        registeredSeats,
+        countOfReservations,
+        countOfReverts,
+        percentOfReverts
     }
 
     return report;

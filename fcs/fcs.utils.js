@@ -35,3 +35,38 @@ function flightDetails(flightName) {
 function random(from, to) {
     return Math.floor(Math.random() * (to - from) + from);
 }
+
+/**
+ * Выбор только активных билетов рейса
+ *
+ * @param {Flight} flight
+ * @returns {array} возвращает массив активных билетов
+ */
+const activeTickets = flight => flight.tickets.filter(item => !item.revertTime);
+
+/**
+ * Функция проверяет корректность билета по номеру и возвращает объекты билета и рейса
+ *
+ * @param {World} world
+ * @param {string} ticketId номер билета
+ * @returns { {flight: Flight, ticket: Ticket} }
+ */
+function getFlightTicket(world, ticketId) {
+    let flightName, ticketNumber;
+    [flightName, ticketNumber] = ticketId.split('-');
+
+    if (!ticketNumber)
+        throw new Error('Ticket number is invalid');
+
+    const flight = world.flights[flightName];
+
+    if (!flight)
+        throw new Error('Flight not found');
+
+    const ticket = flight.tickets.find(t => t.id === ticketId);
+
+    if (!ticket)
+        throw new Error('Ticket not found in flight');
+
+    return { flight, ticket };
+}

@@ -28,8 +28,12 @@ describe('flightReport', () => {
                 complete: false,
                 countOfSeats: 36,
                 reservedSeats: 0,
-                registeredSeats: 0
+                registeredSeats: 0,
+                countOfReservations: 0,
+                countOfReverts: 0,
+                percentOfReverts: 0
             };
+            console.log(result)
             assert.deepEqual(result, expectedResult);
         });
     });
@@ -49,7 +53,10 @@ describe('flightReport', () => {
                 complete: false,
                 countOfSeats: 36,
                 reservedSeats: 1,
-                registeredSeats: 0
+                registeredSeats: 0,
+                countOfReservations: 1,
+                countOfReverts: 0,
+                percentOfReverts: 0
             };
             assert.deepEqual(result, expectedResult);
         });
@@ -63,7 +70,10 @@ describe('flightReport', () => {
                 complete: false,
                 countOfSeats: 36,
                 reservedSeats: 1,
-                registeredSeats: 0
+                registeredSeats: 0,
+                countOfReservations: 1,
+                countOfReverts: 0,
+                percentOfReverts: 0
             };
             assert.deepEqual(result, expectedResult);
         });
@@ -77,7 +87,10 @@ describe('flightReport', () => {
                 complete: false,
                 countOfSeats: 36,
                 reservedSeats: 1,
-                registeredSeats: 0
+                registeredSeats: 0,
+                countOfReservations: 1,
+                countOfReverts: 0,
+                percentOfReverts: 0
             };
             assert.deepEqual(result, expectedResult);
         });
@@ -91,7 +104,10 @@ describe('flightReport', () => {
                 complete: true,
                 countOfSeats: 36,
                 reservedSeats: 1,
-                registeredSeats: 0
+                registeredSeats: 0,
+                countOfReservations: 1,
+                countOfReverts: 0,
+                percentOfReverts: 0
             };
             assert.deepEqual(result, expectedResult);
         });
@@ -105,7 +121,31 @@ describe('flightReport', () => {
                 complete: true,
                 countOfSeats: 36,
                 reservedSeats: 1,
-                registeredSeats: 0
+                registeredSeats: 0,
+                countOfReservations: 1,
+                countOfReverts: 0,
+                percentOfReverts: 0
+            };
+            assert.deepEqual(result, expectedResult);
+        });
+
+        it('returns Report object with reverted ticket info', () => {
+            let result = buyTicket(bigWorld, 'BH118', makeTime(5, 10), 'Ivanov I. I.');
+            let newWorld = result.world;
+            let ticket = result.ticket;
+            newWorld = revertTicket(newWorld, ticket.id, makeTime(6, 10));
+            const flight = newWorld.flights['BH118'];
+            result = flightReport(newWorld, flight, makeTime(16, 0));
+            const expectedResult = {
+                flight: 'BH118',
+                registration: false,
+                complete: true,
+                countOfSeats: 36,
+                reservedSeats: 1,
+                registeredSeats: 0,
+                countOfReservations: 2,
+                countOfReverts: 1,
+                percentOfReverts: 50
             };
             assert.deepEqual(result, expectedResult);
         });

@@ -19,7 +19,7 @@ function findAvailableSeat(flight, type) {
             const availableSeats = [];
 
             for (let i = flight.businessSeats + 1; i <= flight.seats; i++)
-                if (!flight.tickets.find(item => item.seat === i))
+                if (!activeTickets(flight).find(item => item.seat === i))
                     availableSeats.push(i);
 
             if (availableSeats.length === 0)
@@ -29,7 +29,7 @@ function findAvailableSeat(flight, type) {
             return availableSeats[index];
         case 1: // business
             for (let i = 1; i <= flight.businessSeats; i++)
-                if (!flight.tickets.find(item => item.seat === i))
+                if (!activeTickets(flight).find(item => item.seat === i))
                     seatsOfType++;
 
             if (seatsOfType === 0)
@@ -37,7 +37,7 @@ function findAvailableSeat(flight, type) {
 
             do {
                 seat = Math.floor(Math.random() * flight.businessSeats) + 1;
-                exists = flight.tickets.find(item => item.seat === seat);
+                exists = activeTickets(flight).find(item => item.seat === seat);
             } while (exists);
 
             return seat;
@@ -66,7 +66,7 @@ function buyTicket(world, flightName, buyTime, fullName, type = 0) {
     if (!flight)
         throw new Error('Flight not found');
 
-    if (flight.tickets.length >= flight.seats)
+    if (activeTickets(flight).length >= flight.seats)
         throw new Error('No seats available');
 
     if (buyTime > flight.registartionEnds)
