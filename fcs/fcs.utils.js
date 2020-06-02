@@ -15,21 +15,9 @@ function makeTime(hours, minutes) {
     return date.getTime();
 }
 
-function displayFlights() {
+function displayFlights(world) {
     console.log('*** List of all flights ***');
-    console.table(flights);
-}
-
-function flightDetails(flightName) {
-    console.log(`*** Details of flight ${flightName} ***`);
-    const flight = flights[flightName];
-    if (!flight) {
-        console.warn('Flight not found');
-        return;
-    }
-
-    console.table(flight);
-    console.table(flight.tickets);
+    console.table(world.flights);
 }
 
 function random(from, to) {
