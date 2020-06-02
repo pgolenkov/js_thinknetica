@@ -52,4 +52,7 @@ let bigWorld = {
  * @property {number} countOfSeats Общее количество мест
  * @property {number} reservedSeats Количество купленных (забронированных) мест
  * @property {number} registeredSeats Количество пассажиров, прошедших регистрацию
+ * @property {number} countOfReservations Количество всех регистраций мест
+ * @property {number} countOfReverts Количество возвратов билетов
+ * @property {number} percentOfReverts Процент возвратов от общего числа бронирований
  */
