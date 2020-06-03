@@ -2,11 +2,10 @@ describe('parseTemplate', () => {
     let object, block;
 
     beforeEach(() => {
-        const body = document.querySelector("body");
         const div = document.createElement("div");
         div.setAttribute("id", "item1");
         div.innerHTML = '<h3 data-field="title">Some title</h3><p data-field="description"></p></div>';
-        body.append(div);
+        document.body.append(div);
 
         object = {
             title: "Hello world",
@@ -70,11 +69,11 @@ describe('parseTemplate', () => {
     it('does not change elements outside of block', () => {
         const outTitleElement = document.createElement("div");
         outTitleElement.setAttribute("data-field", "title");
-        document.querySelector("body").append(outTitleElement);
+        document.body.append(outTitleElement);
 
         const outDescriptionElement = document.createElement("div");
         outDescriptionElement.setAttribute("data-field", "description");
-        document.querySelector("body").append(outDescriptionElement);
+        document.body.append(outDescriptionElement);
 
         parseTemplate(block, object);
 

@@ -20,7 +20,8 @@ function flightDetails(world, flightName) {
     if (!flight)
         throw new Error('Flight not found');
 
-    const report = flightReport(world, flight);
+    const nowTime = new Date().getTime();
+    const report = flightReport(world, flight, nowTime);
 
     for (property in report) {
         const reportField = document.createElement('p');
@@ -30,28 +31,36 @@ function flightDetails(world, flightName) {
         container.append(reportField);
     }
 
-    const ticketsTable = document.createElement('table');
-    const ticketsTableHeader = document.createElement('tr');
-    const ticketFields = ['id', 'seat', 'fullName', 'registrationTime'];
+    if (activeTickets(flight).length) {
 
-    ticketFields.forEach(field => {
-        const headerColumn = document.createElement('th');
-        const headerColumnValue = document.createTextNode(field);
-        headerColumn.append(headerColumnValue);
-        ticketsTableHeader.append(headerColumn);
-    });
-    ticketsTable.append(ticketsTableHeader);
+        const ticketsTable = document.createElement('table');
+        const ticketsTableHeader = document.createElement('tr');
+        const ticketFields = ['id', 'seat', 'fullName', 'registrationTime'];
 
-    flight.tickets.forEach(ticket => {
-        const ticketsTableRow = document.createElement('tr');
         ticketFields.forEach(field => {
-            const ticketFieldColumn = document.createElement('td');
-            const ticketFieldValue = document.createTextNode(ticket[field] || '-');
-            ticketFieldColumn.append(ticketFieldValue);
-            ticketsTableRow.append(ticketFieldColumn);
+            const headerColumn = document.createElement('th');
+            const headerColumnValue = document.createTextNode(field);
+            headerColumn.append(headerColumnValue);
+            ticketsTableHeader.append(headerColumn);
         });
-        ticketsTable.append(ticketsTableRow);
-    });
+        ticketsTable.append(ticketsTableHeader);
 
-    container.append(ticketsTable);
+        activeTickets(flight).forEach(ticket => {
+            const ticketsTableRow = document.createElement('tr');
+            ticketFields.forEach(field => {
+                const ticketFieldColumn = document.createElement('td');
+                const ticketFieldValue = document.createTextNode(ticket[field] || '-');
+                ticketFieldColumn.append(ticketFieldValue);
+                ticketsTableRow.append(ticketFieldColumn);
+            });
+            ticketsTable.append(ticketsTableRow);
+        });
+
+        container.append(ticketsTable);
+    }
+    else {
+        const ticketsInfo = document.createElement('p');
+        ticketsInfo.textContent = 'No tickets reserved';
+        container.append(ticketsInfo);
+    };
 };
