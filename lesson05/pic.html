@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>pic</title>
+    <link href="pic.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<label for="field-width">Ширина поля</label>
+<input type="number" id="field-width" class="input-size" min="1" max="20"></input>
+
+<label for="field-height">Высота поля</label>
+<input type="number" id="field-height" class="input-size" min="1" max="20"></input>
+
+<label for="field-color">Цвет закраски</label>
+<input type="color" id="field-color"></input>
+
+<label for="field-ctrl-color">Цвет CTRL закраски</label>
+<input type="color" id="field-ctrl-color"></input>
+
+<table id="field" data-width="0" data-height="0"></table>
+
+<script src="pic.js"></script>
+</body>
+
+</html>

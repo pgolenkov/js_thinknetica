@@ -1,0 +1,10 @@
+table {
+    display: block;
+    margin: 20px auto;
+}
+
+table tr td {
+    width: 20px;
+    height: 20px;
+    border: 2px solid gray;
+}
