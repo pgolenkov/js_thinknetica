@@ -1,5 +1,9 @@
 'use strict';
 
+function updateView() {
+    flightDetails(bigWorld, 'BH118');
+}
+
 const result = addFlight(
     bigWorld,
     {
@@ -23,5 +27,6 @@ console.log(bigWorld);
 let res2 = buyTicket(bigWorld, 'BH118', makeTime(5, 10), 'Ivanov I. I.');
 
 console.log(bigWorld, res2.world);
+bigWorld = res2.world;
 
-flightDetails(res2.world, 'BH118');
+updateView();
