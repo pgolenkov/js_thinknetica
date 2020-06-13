@@ -5,7 +5,7 @@
  * @property {string} patronymic Отчество
  */
 
- function Student(name) {
+function Student(name) {
     if (typeof name !== 'string')
         throw new Error('Invalid name');
 

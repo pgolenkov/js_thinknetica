@@ -33,6 +33,7 @@ describe("Student", () => {
             assert.throws(() => new Student(5), 'Invalid name');
         });
     });
+    
     describe("methods", () => {
         const student = new Student("Ivanov Ivan Ivanovich");
 
