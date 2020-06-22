@@ -10,27 +10,27 @@ describe("Ship", () => {
         });
 
         it("should raise error no parameters present", () => {
-            assert.throws(() => new Ship(), 'Invalid parameters');
+            assert.throws(() => new Ship(), 'Ship name and model must be strings');
         });
 
         it("should raise error if string parameters types are incorrect", () => {
-            assert.throws(() => new Ship(1, 2, 3, 5), 'Invalid parameters');
+            assert.throws(() => new Ship(1, 2, 3, 5), 'Ship name and model must be strings');
         });
 
         it("should raise error if number parameters type are incorrect", () => {
-            assert.throws(() => new Ship("Name", "Model", "something"), 'Invalid parameters');
+            assert.throws(() => new Ship("Name", "Model", "something"), 'Ship coordinates must be integers');
         });
 
         it("should raise error if positions are Float", () => {
-            assert.throws(() => new Ship("Name", "Model", 2.5, 3.5), 'Invalid parameters');
+            assert.throws(() => new Ship("Name", "Model", 2.5, 3.5), 'Ship coordinates must be integers');
         });
 
         it("should raise error if not all positions present", () => {
-            assert.throws(() => new Ship("Name", "Model", 3), 'Invalid parameters');
+            assert.throws(() => new Ship("Name", "Model", 3), 'Ship coordinates must be integers');
         });
 
         it("should raise error if position not a number", () => {
-            assert.throws(() => new Ship("Name", "Model", Infinity, 3), 'Invalid parameters');
+            assert.throws(() => new Ship("Name", "Model", Infinity, 3), 'Ship coordinates must be integers');
         });
     });
 

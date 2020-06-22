@@ -8,8 +8,12 @@
  */
 
 function Ship(name, model, x, y) {
-    if (typeof name !== 'string' || typeof model !== 'string' || !Number.isInteger(x) || !Number.isInteger(y))
-        throw new Error('Invalid parameters');
+    if (typeof name !== 'string' || typeof model !== 'string')
+        throw new Error('Ship name and model must be strings');
+        
+    if (!Number.isInteger(x) || !Number.isInteger(y))
+        throw new Error('Ship coordinates must be integers');
+
     this.name = name;
     this.model = model;
     this.position = new Position(x, y);

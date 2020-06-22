@@ -6,7 +6,7 @@
 
 function Dock(x, y) {
     if (!Number.isInteger(x) || !Number.isInteger(y))
-        throw new Error('Invalid parameters');
+        throw new Error('Dock coordinates must be integers');
 
     this.position = new Position(x, y);
     this.ships = [];

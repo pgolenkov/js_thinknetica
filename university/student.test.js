@@ -22,18 +22,18 @@ describe("Student", () => {
         });
 
         it("should raise error no last name present", () => {
-            assert.throws(() => new Student("Ivan"), 'Invalid name');
+            assert.throws(() => new Student("Ivan"), 'Name of student must have first name and last name');
         });
 
         it("should raise error no name present", () => {
-            assert.throws(() => new Student(), 'Invalid name');
+            assert.throws(() => new Student(), 'Name of student must be a string');
         });
 
         it("should raise error if parameter type is incorrect", () => {
-            assert.throws(() => new Student(5), 'Invalid name');
+            assert.throws(() => new Student(5), 'Name of student must be a string');
         });
     });
-    
+
     describe("methods", () => {
         const student = new Student("Ivanov Ivan Ivanovich");
 

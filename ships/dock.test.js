@@ -7,23 +7,23 @@ describe("Dock", () => {
         });
 
         it("should raise error no parameters present", () => {
-            assert.throws(() => new Dock(), 'Invalid parameters');
+            assert.throws(() => new Dock(), 'Dock coordinates must be integers');
         });
 
         it("should raise error if number parameters type are incorrect", () => {
-            assert.throws(() => new Dock("Name", "Model"), 'Invalid parameters');
+            assert.throws(() => new Dock("Name", "Model"), 'Dock coordinates must be integers');
         });
 
         it("should raise error if positions are Float", () => {
-            assert.throws(() => new Dock(2.5, 3.5), 'Invalid parameters');
+            assert.throws(() => new Dock(2.5, 3.5), 'Dock coordinates must be integers');
         });
 
         it("should raise error if not all positions present", () => {
-            assert.throws(() => new Dock(3), 'Invalid parameters');
+            assert.throws(() => new Dock(3), 'Dock coordinates must be integers');
         });
 
         it("should raise error if position not a number", () => {
-            assert.throws(() => new Dock(Infinity, 3), 'Invalid parameters');
+            assert.throws(() => new Dock(Infinity, 3), 'Dock coordinates must be integers');
         });
     });
 

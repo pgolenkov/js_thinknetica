@@ -7,12 +7,12 @@
 
 function Student(name) {
     if (typeof name !== 'string')
-        throw new Error('Invalid name');
+        throw new Error('Name of student must be a string');
 
     [this.lastName, this.firstName, this.patronymic] = name.split(' ').filter(item => item);
 
     if (!this.lastName || !this.firstName)
-        throw new Error('Invalid name');
+        throw new Error('Name of student must have first name and last name');
 
     this.patronymic = this.patronymic || "";
 
