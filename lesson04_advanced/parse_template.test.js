@@ -2,35 +2,23 @@ describe('parseTemplate', () => {
     let object, block;
 
     beforeEach(() => {
-        const div = document.createElement("div");
-        div.setAttribute("id", "item1");
-        div.innerHTML = '<h3 data-field="title">Some title</h3><p data-field="description"></p></div>';
-        document.body.append(div);
+        block = document.createElement("div");
+        block.innerHTML = '<h3 data-field="title">Some title</h3><p data-field="description"></p></div>';
 
         object = {
             title: "Hello world",
             description: "The first program"
         };
-
-        block = document.getElementById("item1");
-    });
-
-    afterEach(() => {
-        block.innerHTML = '';
-        block.remove();
     });
 
     it('parsed template correctly', () => {
         parseTemplate(block, object);
 
-        const titleElements = document.querySelectorAll('[data-field="title"]');
-        const descriptionElements = document.querySelectorAll('[data-field="description"]');
+        const titleElement = block.querySelector('[data-field="title"]');
+        const descriptionElement = block.querySelector('[data-field="description"]');
 
-        for (let element of titleElements)
-            assert.equal(element.textContent, object.title);
-
-        for (let element of descriptionElements)
-            assert.equal(element.textContent, object.description);
+        assert.equal(titleElement.textContent, object.title);
+        assert.equal(descriptionElement.textContent, object.description);
     });
 
     it('parsed template with several same fields correctly', () => {
@@ -44,8 +32,8 @@ describe('parseTemplate', () => {
 
         parseTemplate(block, object);
 
-        const titleElements = document.querySelectorAll('[data-field="title"]');
-        const descriptionElements = document.querySelectorAll('[data-field="description"]');
+        const titleElements = block.querySelectorAll('[data-field="title"]');
+        const descriptionElements = block.querySelectorAll('[data-field="description"]');
 
         for (let element of titleElements)
             assert.equal(element.textContent, object.title);
