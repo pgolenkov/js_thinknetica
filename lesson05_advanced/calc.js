@@ -36,19 +36,21 @@ function calcSetAction(actionValue) {
 function calcResult() {
     if (!operand2.length)
         return;
+    const number1 = parseInt(operand1);
+    const number2 = parseInt(operand2);
 
     switch (action) {
         case '+':
-            result = operand1 + operand2;
+            result = number1 + number2;
             break;
         case '-':
-            result = operand1 - operand2;
+            result = number1 - number2;
             break;
         case '*':
-            result = operand1 * operand2;
+            result = number1 * number2;
             break;
         case '/':
-            result = operand1 / operand2;
+            result = number1 / number2;
             break;
     };
 
