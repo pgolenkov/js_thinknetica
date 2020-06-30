@@ -10,12 +10,26 @@
  */
 
 function Ticket(id, flightName, fullName, type, seat, buyTime) {
-    this.id = id;
-    this.flightName = flightName;
-    this.fullName = fullName;
-    this.type = type;
-    this.seat = seat;
-    this.buyTime = buyTime;
+    this._id = id;
+    this._flightName = flightName;
+    this._fullName = fullName;
+    this._type = type;
+    this._seat = seat;
+    this._buyTime = buyTime;
 
-    Object.freeze(this);
+    this.id = function() { return this._id };
+    this.flightName = function() { return this._flightName };
+    this.fullName = function() { return this._fullName };
+    this.type = function() { return this._type };
+    this.seat = function() { return this._seat };
+    this.buyTime = function() { return this._buyTime };
+
+    this.eRegistration = function ( ) {
+        if (this.registrationTime)
+            throw new Error('Ticket has already been registered');
+
+        this.registrationTime = nowTime;
+
+        return this;
+    }
 }
