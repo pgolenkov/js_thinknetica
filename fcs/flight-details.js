@@ -10,10 +10,11 @@
 
 function flightDetails(world, flightName) {
     const container = document.getElementById('flight-details');
-    container.innerHTML = '';
 
     if (!container)
         throw new Error('Container with id ="flight-details" is not found in the document');
+
+    container.innerHTML = '';
 
     const flight = world.flights[flightName];
 
