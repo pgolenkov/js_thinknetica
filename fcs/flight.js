@@ -20,7 +20,7 @@ function Flight(name, seats, businessSeats, time) {
      * @returns {array} возвращает массив активных билетов
      */
     this.activeTickets = function () {
-        return this.tickets.filter(item => !item.revertTime);
+        return this.tickets.filter(item => !item.revertTime());
     }
 
     /**
@@ -83,7 +83,7 @@ function Flight(name, seats, businessSeats, time) {
         if (this.activeTickets().length >= this.seats)
             throw new Error('No seats available');
 
-        if (buyTime > this.registartionEnds)
+        if (buyTime > this.registrationEnds)
             throw new Error('Time away');
 
         const seat = this._findAvailableSeat(type);
@@ -93,12 +93,12 @@ function Flight(name, seats, businessSeats, time) {
         let id, exists;
         do {
             id = this.name + '-' + this.tickets.length; // Math.random().toString().substr(2, 3);
-            exists = flight.tickets.find(item => item.id === id);
+            exists = this.tickets.find(item => item.id === id);
         } while (exists);
 
         const ticket = new Ticket(
             id,
-            flight.name,
+            this.name,
             fullName,
             type,
             seat,
@@ -107,9 +107,7 @@ function Flight(name, seats, businessSeats, time) {
 
         this.tickets.push(ticket);
 
-        return {
-            ...ticket
-        }
+        return ticket;
     }
 
 
@@ -120,7 +118,7 @@ function Flight(name, seats, businessSeats, time) {
      * @returns {Ticket}
      */
     this.getTicket = function(ticketId) {
-        const ticket = this.tickets.find(t => t.id === ticketId);
+        const ticket = this.tickets.find(t => t.id() === ticketId);
 
         if (!ticket)
             throw new Error('Ticket not found in flight');
@@ -138,12 +136,30 @@ function Flight(name, seats, businessSeats, time) {
     }
 
     /**
+     * Функция возврата билета
+     *
+     *  * проверка билета
+     *  * вернуть билет можно если до рейса не менее 3 часов
+     * @param {string} ticketId номер билета
+     * @param {number} nowTime текущее время
+     * @returns {Ticket} если успешно или ошибка
+     */
+     this.revertTicket = function(ticketId, nowTime) {
+        if (this.registrationEnds - 2 * 3600 * 1000 < nowTime)
+            throw new Error('Reverting ticket available 3 hours before flight only');
+
+        const ticket = this.getTicket(ticketId);
+
+        return ticket.revert(nowTime);
+    }
+
+    /**
      * Функция генерации отчета по рейсу
      *
      * @param {number} nowTime текущее время
      * @returns {Report} отчет
      */
-    this.flightReport = function (nowTime) {
+    this.report = function (nowTime) {
         const timeToFly = (this.registrationEnds - nowTime) / 1000 / 3600;
         const registration = timeToFly > 1 && timeToFly < 5;
 
@@ -153,11 +169,11 @@ function Flight(name, seats, businessSeats, time) {
 
         const reservedSeats = this.activeTickets().length;
 
-        const registeredSeats = this.activeTickets().filter(t => t.registrationTime).length
+        const registeredSeats = this.activeTickets().filter(t => t.registrationTime()).length
 
         const countOfReservations = this.tickets.length;
 
-        const countOfReverts = this.tickets.filter(t => t.revertTime).length
+        const countOfReverts = this.tickets.filter(t => t.revertTime()).length
 
         const percentOfReverts = countOfReservations ? countOfReverts / countOfReservations * 100 : 0;
 

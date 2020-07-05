@@ -64,7 +64,7 @@ function World() {
      * @param {number} type Тип места
      * @returns {Ticket} Возвращаем копию билета
      */
-    function buyTicket(flightName, buyTime, fullName, type = 0) {
+    this.buyTicket = function (flightName, buyTime, fullName, type = 0) {
         const flight = this.getFlight(flightName);
 
         if (!flight)

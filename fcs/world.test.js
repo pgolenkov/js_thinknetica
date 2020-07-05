@@ -13,21 +13,21 @@ describe("World", () => {
     });
 
     describe("methods", () => {
+        let airliner, time, name, flight;
+
+        beforeEach(() => {
+            airliner = {
+                name: 'Airbus 747',
+                seats: 36,
+                businessSeats: 4,
+            };
+            time = makeTime(16, 0);
+            name = 'BH118';
+
+            flight = world.addFlight(airliner, time, name);
+        });
+
         describe("addFlight", () => {
-            let airliner, time, name, flight;
-
-            beforeEach(() => {
-                airliner = {
-                    name: 'Airbus 747',
-                    seats: 36,
-                    businessSeats: 4,
-                };
-                time = makeTime(16, 0);
-                name = 'BH118';
-
-                flight = world.addFlight(airliner, time, name);
-            });
-
             it("creates new flight", () => {
                 assert.instanceOf(flight, Flight);
             });
@@ -54,6 +54,36 @@ describe("World", () => {
                 world.addFlight(airliner, time, name);
 
                 assert.deepEqual(world.history, [[], [world.flights[0]], [world.flights[0], world.flights[1]]]);
+            });
+        });
+
+        describe("buyTicket", () => {
+            it("calls buyTicket method of flight found by flightName", () => {
+                flight.buyTicket = function() { this.buyTicketCalled = true };
+
+                world.buyTicket(flight.name, makeTime(5, 10), 'Petrov I. I.');
+                assert.isTrue(flight.buyTicketCalled);
+            });
+
+            it("should raise error if flight not found", () => {
+                assert.throws(() => world.buyTicket('A118', makeTime(5, 10), 'Petrov I. I.'), 'Flight not found');
+            });
+        });
+
+        describe("eRegistration", () => {
+            it("calls eRegistration method of flight found by ticketId", () => {
+                flight.eRegistration = function() { this.eRegistrationCalled = true };
+
+                world.eRegistration('BH118-123', 'Petrov I. I.', makeTime(5, 10));
+                assert.isTrue(flight.eRegistrationCalled);
+            });
+
+            it("should raise error if flight not found", () => {
+                assert.throws(() => world.eRegistration('AH118-123', 'Petrov I. I.', makeTime(5, 10)), 'Flight not found');
+            });
+
+            it("should raise error if ticketId is invalid", () => {
+                assert.throws(() => world.eRegistration('BH118', 'Petrov I. I.', makeTime(5, 10)), 'Ticket number is invalid');
             });
         });
     });
